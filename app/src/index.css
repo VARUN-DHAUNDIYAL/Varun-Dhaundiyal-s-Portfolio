@@ -33,17 +33,17 @@
   * {
     @apply border-border;
   }
-  
+
   html {
     scroll-behavior: auto;
   }
-  
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
   }
-  
+
   ::selection {
     background: hsl(var(--primary) / 0.3);
     color: white;
@@ -79,8 +79,15 @@
 
 /* Text scramble effect */
 @keyframes scramble {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* Magnetic button styles */
@@ -187,7 +194,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Fluid canvas */
@@ -290,197 +299,236 @@
 }
 
 /* Stagger children */
-.stagger-children > * {
+.stagger-children>* {
   opacity: 0;
   transform: translateY(20px);
 }
 
-.stagger-children.revealed > * {
+.stagger-children.revealed>* {
   opacity: 1;
   transform: translateY(0);
 }
 
-.stagger-children.revealed > *:nth-child(1) { transition-delay: 0s; }
-.stagger-children.revealed > *:nth-child(2) { transition-delay: 0.1s; }
-.stagger-children.revealed > *:nth-child(3) { transition-delay: 0.2s; }
-.stagger-children.revealed > *:nth-child(4) { transition-delay: 0.3s; }
-.stagger-children.revealed > *:nth-child(5) { transition-delay: 0.4s; }
+.stagger-children.revealed>*:nth-child(1) {
+  transition-delay: 0s;
+}
+
+.stagger-children.revealed>*:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.stagger-children.revealed>*:nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.stagger-children.revealed>*:nth-child(4) {
+  transition-delay: 0.3s;
+}
+
+.stagger-children.revealed>*:nth-child(5) {
+  transition-delay: 0.4s;
+}
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
+
+  /* Performance optimizations - reduce scroll lag */
+  * {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* Disable heavy effects on mobile */
+  .blur-\[120px\],
+  .blur-\[80px\],
+  .blur-\[60px\] {
+    display: none !important;
+  }
+
   /* Typography adjustments - smoother scaling */
   .text-hero {
     font-size: clamp(2.2rem, 11vw, 3.5rem) !important;
     line-height: 1.1 !important;
   }
-  
+
   .text-section {
     font-size: clamp(1.5rem, 7vw, 2rem) !important;
   }
-  
+
   /* Section padding - tighter on mobile */
   section {
     padding-top: 3rem !important;
     padding-bottom: 3rem !important;
+    overflow-x: hidden !important;
   }
-  
-  /* Container padding */
+
+  /* Container padding - prevent cutoff */
   .max-w-\[1400px\] {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+    overflow-x: hidden !important;
   }
-  
+
   /* Grid adjustments - stack on mobile */
   .grid-cols-2,
   .grid-cols-3,
   .grid-cols-4 {
     grid-template-columns: 1fr !important;
   }
-  
-  /* Card adjustments */
-  .experience-card {
+
+  /* Card adjustments - prevent cutoff */
+  .experience-card,
+  .skill-category,
+  .rounded-2xl.bg-card {
     width: 100% !important;
-    padding: 1.25rem !important;
+    padding: 1rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
   }
-  
+
+  /* Shipsy BI Card fix */
+  .p-8.rounded-2xl.bg-card {
+    padding: 1rem !important;
+  }
+
+  /* Role description items */
+  .flex.items-start.gap-4.p-4 {
+    padding: 0.75rem !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+
   /* Project cards */
   .project-card {
     margin-bottom: 0.75rem;
+    overflow: hidden !important;
   }
-  
+
   .project-card .h-64 {
     height: 180px !important;
   }
-  
+
   .project-card .p-8 {
-    padding: 1.25rem !important;
-  }
-  
-  /* Stats grid */
-  .stat-item {
     padding: 1rem !important;
   }
-  
+
+  /* Stats grid */
+  .stat-item {
+    padding: 0.875rem !important;
+  }
+
   .stat-item .text-3xl {
-    font-size: 1.5rem !important;
+    font-size: 1.25rem !important;
   }
-  
-  /* Skills grid */
+
+  /* Skills grid - ensure no cutoff */
   .skill-category {
-    padding: 1.25rem !important;
+    padding: 1rem !important;
+    overflow: hidden !important;
   }
-  
+
   .skill-category .text-xl {
-    font-size: 1rem !important;
+    font-size: 0.95rem !important;
   }
-  
-  /* AI tools grid - 2 columns on mobile */
-  .ai-tool-item {
-    padding: 0.75rem !important;
+
+  /* Skills tags container */
+  .skill-category .flex.flex-wrap {
+    gap: 0.375rem !important;
   }
-  
-  .ai-tool-item span {
+
+  /* Individual skill tags */
+  .skill-tag,
+  .px-3.py-1.rounded-full {
+    padding: 0.25rem 0.5rem !important;
     font-size: 0.7rem !important;
   }
-  
+
+  /* AI tools grid - 4 columns on mobile */
+  .ai-tool-item {
+    padding: 0.5rem !important;
+    min-width: 0 !important;
+  }
+
+  .ai-tool-item span {
+    font-size: 0.65rem !important;
+    word-break: break-word !important;
+  }
+
   /* Form inputs */
   .form-input,
   input,
   textarea {
-    font-size: 16px !important; /* Prevents zoom on iOS */
+    font-size: 16px !important;
   }
-  
-  /* Screenshot gallery */
-  .screenshot-gallery img {
-    max-height: 250px !important;
-  }
-  
-  /* Table overflow */
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  
-  /* Buttons - full width on mobile */
-  .inline-flex.items-center.gap-2.px-6.py-3 {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  /* About section image */
-  .rounded-2xl.overflow-hidden.border {
-    max-height: 200px;
-  }
-  
-  /* Experience section highlights */
+
+  /* Key highlights - experience section */
   .text-4xl.font-bold.text-primary {
-    font-size: 1.75rem !important;
+    font-size: 1.5rem !important;
   }
-  
+
   /* Contact CTA */
   .text-4xl.md\:text-6xl.lg\:text-7xl {
-    font-size: 1.75rem !important;
+    font-size: 1.5rem !important;
     line-height: 1.2 !important;
   }
-  
-  /* Tool items - smaller on mobile */
-  .tool-item {
-    padding: 0.75rem 1rem !important;
-  }
-  
-  /* Nice Side tablet - hide on very small screens, scale on mobile */
-  .h-\[400px\].w-\[680px\] {
-    transform: scale(0.5) !important;
-    transform-origin: center center !important;
-    margin: -100px 0 !important;
-  }
-  
-  /* Footer text */
-  .text-sm.text-muted-foreground.text-center {
-    text-align: center !important;
-  }
-  
+
   /* Gap reductions */
   .gap-16 {
-    gap: 2rem !important;
+    gap: 1.5rem !important;
   }
-  
+
   .gap-8 {
-    gap: 1.25rem !important;
-  }
-  
-  .gap-6 {
     gap: 1rem !important;
   }
-  
+
+  .gap-6 {
+    gap: 0.75rem !important;
+  }
+
+  .gap-4 {
+    gap: 0.5rem !important;
+  }
+
   /* Margin reductions */
   .mb-20 {
-    margin-bottom: 2.5rem !important;
-  }
-  
-  .mb-16 {
     margin-bottom: 2rem !important;
   }
-  
-  .mb-12 {
+
+  .mb-16 {
     margin-bottom: 1.5rem !important;
   }
-  
-  /* Core attributes section */
-  .w-16.h-16 {
-    width: 3rem !important;
-    height: 3rem !important;
+
+  .mb-12 {
+    margin-bottom: 1.25rem !important;
   }
-  
-  .w-16.h-16 svg {
+
+  /* Icons sizing */
+  .w-16.h-16 {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+
+  .w-6.h-6 {
     width: 1.25rem !important;
     height: 1.25rem !important;
   }
-  
+
   /* Bottom spacing for footer */
   .mt-32 {
-    margin-top: 3rem !important;
+    margin-top: 2rem !important;
+  }
+
+  /* Experience section title row */
+  .flex.items-center.gap-6 {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Shipsy logo link in experience */
+  .px-4.py-2.rounded-xl {
+    padding: 0.5rem 0.75rem !important;
   }
 }
 
@@ -489,26 +537,26 @@
   .text-hero {
     font-size: 2rem !important;
   }
-  
+
   .text-section {
     font-size: 1.25rem !important;
   }
-  
+
   /* Nice Side tablet - hide completely on very small screens */
   .h-\[400px\].w-\[680px\] {
     display: none !important;
   }
-  
+
   /* Show fallback link instead */
   .nice-side-mobile-link {
     display: block !important;
   }
-  
+
   /* Smaller padding */
   .p-8 {
     padding: 1rem !important;
   }
-  
+
   .p-6 {
     padding: 0.875rem !important;
   }
@@ -519,15 +567,15 @@
   .grid-cols-4 {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  
+
   .lg\:grid-cols-2 {
     grid-template-columns: 1fr !important;
   }
-  
+
   .lg\:grid-cols-3 {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  
+
   /* Nice Side tablet scaling */
   .h-\[400px\].w-\[680px\] {
     transform: scale(0.75) !important;
@@ -541,15 +589,15 @@
   .hover\:scale-105:hover {
     transform: none !important;
   }
-  
+
   .group:hover .group-hover\:scale-110 {
     transform: none !important;
   }
-  
+
   .skill-tag:hover {
     transform: none !important;
   }
-  
+
   /* Larger touch targets */
   button,
   a,
@@ -563,6 +611,7 @@
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
