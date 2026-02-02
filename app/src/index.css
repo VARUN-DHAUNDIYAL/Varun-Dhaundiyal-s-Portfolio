@@ -1,0 +1,573 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 2%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 11%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 63%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 13%;
+    --input: 0 0% 13%;
+    --ring: 217 91% 60%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+  
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: white;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* Smooth scroll container */
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Text scramble effect */
+@keyframes scramble {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Magnetic button styles */
+.magnetic-button {
+  transition: transform 0.15s ease-out;
+}
+
+/* Glass morphism */
+.glass {
+  background: hsl(var(--card) / 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Glow effects */
+.glow-primary {
+  box-shadow: 0 0 40px hsl(var(--primary) / 0.3);
+}
+
+.glow-text {
+  text-shadow: 0 0 40px hsl(var(--primary) / 0.5);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, hsl(var(--muted-foreground)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section transitions */
+.section-enter {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+.section-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Card hover effects */
+.card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-3d-inner {
+  transition: transform 0.3s ease-out;
+}
+
+/* Line animation */
+.line-expand {
+  position: relative;
+}
+
+.line-expand::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: hsl(var(--primary));
+  transition: width 0.3s ease-out, left 0.3s ease-out;
+}
+
+.line-expand:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Progress bar */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: hsl(var(--primary));
+  z-index: 9999;
+  transform-origin: left;
+}
+
+/* Loading screen */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: hsl(var(--background));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-circle {
+  width: 60px;
+  height: 60px;
+  border: 2px solid hsl(var(--border));
+  border-top-color: hsl(var(--primary));
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Fluid canvas */
+.fluid-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Hide on mobile for performance */
+@media (max-width: 768px) {
+  .fluid-canvas {
+    display: none;
+  }
+}
+
+/* Custom cursor */
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease-out;
+}
+
+/* Skill tag hover */
+.skill-tag {
+  transition: all 0.3s ease-out;
+}
+
+.skill-tag:hover {
+  background: hsl(var(--primary));
+  transform: scale(1.05);
+}
+
+/* Form input focus */
+.form-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid hsl(var(--border));
+  padding: 12px 0;
+  color: white;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: hsl(var(--primary));
+}
+
+/* Horizontal scroll container */
+.horizontal-scroll {
+  display: flex;
+  gap: 40px;
+  width: max-content;
+}
+
+/* Experience card */
+.experience-card {
+  flex-shrink: 0;
+  width: 500px;
+  padding: 40px;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+}
+
+/* Project card */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, hsl(var(--background) / 0.9) 100%);
+  z-index: 1;
+}
+
+/* Reveal animation */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.reveal-up.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Stagger children */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.stagger-children.revealed > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children.revealed > *:nth-child(1) { transition-delay: 0s; }
+.stagger-children.revealed > *:nth-child(2) { transition-delay: 0.1s; }
+.stagger-children.revealed > *:nth-child(3) { transition-delay: 0.2s; }
+.stagger-children.revealed > *:nth-child(4) { transition-delay: 0.3s; }
+.stagger-children.revealed > *:nth-child(5) { transition-delay: 0.4s; }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  /* Typography adjustments - smoother scaling */
+  .text-hero {
+    font-size: clamp(2.2rem, 11vw, 3.5rem) !important;
+    line-height: 1.1 !important;
+  }
+  
+  .text-section {
+    font-size: clamp(1.5rem, 7vw, 2rem) !important;
+  }
+  
+  /* Section padding - tighter on mobile */
+  section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  
+  /* Container padding */
+  .max-w-\[1400px\] {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Grid adjustments - stack on mobile */
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Card adjustments */
+  .experience-card {
+    width: 100% !important;
+    padding: 1.25rem !important;
+  }
+  
+  /* Project cards */
+  .project-card {
+    margin-bottom: 0.75rem;
+  }
+  
+  .project-card .h-64 {
+    height: 180px !important;
+  }
+  
+  .project-card .p-8 {
+    padding: 1.25rem !important;
+  }
+  
+  /* Stats grid */
+  .stat-item {
+    padding: 1rem !important;
+  }
+  
+  .stat-item .text-3xl {
+    font-size: 1.5rem !important;
+  }
+  
+  /* Skills grid */
+  .skill-category {
+    padding: 1.25rem !important;
+  }
+  
+  .skill-category .text-xl {
+    font-size: 1rem !important;
+  }
+  
+  /* AI tools grid - 2 columns on mobile */
+  .ai-tool-item {
+    padding: 0.75rem !important;
+  }
+  
+  .ai-tool-item span {
+    font-size: 0.7rem !important;
+  }
+  
+  /* Form inputs */
+  .form-input,
+  input,
+  textarea {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  /* Screenshot gallery */
+  .screenshot-gallery img {
+    max-height: 250px !important;
+  }
+  
+  /* Table overflow */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  /* Buttons - full width on mobile */
+  .inline-flex.items-center.gap-2.px-6.py-3 {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* About section image */
+  .rounded-2xl.overflow-hidden.border {
+    max-height: 200px;
+  }
+  
+  /* Experience section highlights */
+  .text-4xl.font-bold.text-primary {
+    font-size: 1.75rem !important;
+  }
+  
+  /* Contact CTA */
+  .text-4xl.md\:text-6xl.lg\:text-7xl {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  /* Tool items - smaller on mobile */
+  .tool-item {
+    padding: 0.75rem 1rem !important;
+  }
+  
+  /* Nice Side tablet - hide on very small screens, scale on mobile */
+  .h-\[400px\].w-\[680px\] {
+    transform: scale(0.5) !important;
+    transform-origin: center center !important;
+    margin: -100px 0 !important;
+  }
+  
+  /* Footer text */
+  .text-sm.text-muted-foreground.text-center {
+    text-align: center !important;
+  }
+  
+  /* Gap reductions */
+  .gap-16 {
+    gap: 2rem !important;
+  }
+  
+  .gap-8 {
+    gap: 1.25rem !important;
+  }
+  
+  .gap-6 {
+    gap: 1rem !important;
+  }
+  
+  /* Margin reductions */
+  .mb-20 {
+    margin-bottom: 2.5rem !important;
+  }
+  
+  .mb-16 {
+    margin-bottom: 2rem !important;
+  }
+  
+  .mb-12 {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Core attributes section */
+  .w-16.h-16 {
+    width: 3rem !important;
+    height: 3rem !important;
+  }
+  
+  .w-16.h-16 svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+  }
+  
+  /* Bottom spacing for footer */
+  .mt-32 {
+    margin-top: 3rem !important;
+  }
+}
+
+/* Small mobile (375px and below) */
+@media (max-width: 400px) {
+  .text-hero {
+    font-size: 2rem !important;
+  }
+  
+  .text-section {
+    font-size: 1.25rem !important;
+  }
+  
+  /* Nice Side tablet - hide completely on very small screens */
+  .h-\[400px\].w-\[680px\] {
+    display: none !important;
+  }
+  
+  /* Show fallback link instead */
+  .nice-side-mobile-link {
+    display: block !important;
+  }
+  
+  /* Smaller padding */
+  .p-8 {
+    padding: 1rem !important;
+  }
+  
+  .p-6 {
+    padding: 0.875rem !important;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .lg\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  /* Nice Side tablet scaling */
+  .h-\[400px\].w-\[680px\] {
+    transform: scale(0.75) !important;
+    transform-origin: center center !important;
+    margin: -50px 0 !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (pointer: coarse) {
+  .hover\:scale-105:hover {
+    transform: none !important;
+  }
+  
+  .group:hover .group-hover\:scale-110 {
+    transform: none !important;
+  }
+  
+  .skill-tag:hover {
+    transform: none !important;
+  }
+  
+  /* Larger touch targets */
+  button,
+  a,
+  .skill-tag,
+  .ai-tool-item,
+  .tool-item {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
