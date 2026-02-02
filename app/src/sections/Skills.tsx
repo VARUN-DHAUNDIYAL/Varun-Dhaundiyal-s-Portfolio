@@ -228,7 +228,7 @@ export default function Skills() {
 
           <div
             ref={aiToolsRef}
-            className="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-8 gap-2 sm:gap-4"
+            className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4"
           >
             {aiTools.map((tool) => (
               <div

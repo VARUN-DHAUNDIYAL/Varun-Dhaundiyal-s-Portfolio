@@ -9,8 +9,9 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Simulate loading progress
-    const duration = 1500;
+    // Faster loading on mobile
+    const isMobile = window.innerWidth < 768;
+    const duration = isMobile ? 800 : 1500;
     const startTime = Date.now();
 
     const updateProgress = () => {

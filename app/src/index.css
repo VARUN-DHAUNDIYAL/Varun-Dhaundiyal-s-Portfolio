@@ -332,10 +332,33 @@
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
 
-  /* Performance optimizations - reduce scroll lag */
-  * {
+  /* GPU acceleration for smoother animations */
+  *,
+  *::before,
+  *::after {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  /* Faster transitions on mobile */
+  *:not(.loading-screen *) {
+    transition-duration: 0.15s !important;
+  }
+
+  /* Reduce animation delays */
+  [class*="delay-"] {
+    animation-delay: 0s !important;
+    transition-delay: 0s !important;
+  }
+
+  /* Optimize will-change for key animated elements */
+  .project-card,
+  .skill-category,
+  .stat-item,
+  .ai-tool-item {
+    will-change: transform, opacity;
   }
 
   /* Disable heavy effects on mobile */
@@ -369,10 +392,8 @@
     overflow-x: hidden !important;
   }
 
-  /* Grid adjustments - stack on mobile */
-  .grid-cols-2,
-  .grid-cols-3,
-  .grid-cols-4 {
+  /* Grid adjustments - stack specific grids on mobile but preserve AI tools 2-col */
+  .grid-cols-3 {
     grid-template-columns: 1fr !important;
   }
 
@@ -598,14 +619,20 @@
     transform: none !important;
   }
 
-  /* Larger touch targets */
-  button,
+  /* Larger touch targets - exclude carousel indicators */
+  button:not(.flex.justify-center button),
   a,
   .skill-tag,
   .ai-tool-item,
   .tool-item {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  /* Carousel indicator buttons should stay small */
+  .flex.justify-center button {
+    min-height: auto !important;
+    min-width: auto !important;
   }
 }
 

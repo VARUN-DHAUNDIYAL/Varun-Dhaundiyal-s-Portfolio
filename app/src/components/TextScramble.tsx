@@ -15,7 +15,7 @@ export default function TextScramble({
   text,
   className = '',
   delay = 0,
-  duration = 0.8,
+  duration = typeof window !== 'undefined' && window.innerWidth < 768 ? 0.4 : 0.8,
   onComplete,
 }: TextScrambleProps) {
   const elementRef = useRef<HTMLSpanElement>(null);
@@ -28,19 +28,19 @@ export default function TextScramble({
 
     const finalText = text;
     const length = finalText.length;
-    
+
     const timeout = setTimeout(() => {
       let frame = 0;
       const totalFrames = Math.floor(duration * 60);
-      
+
       const animate = () => {
         frame++;
         const progress = frame / totalFrames;
-        
+
         let result = '';
         for (let i = 0; i < length; i++) {
           const charProgress = Math.max(0, Math.min(1, (progress * length - i) / 3));
-          
+
           if (finalText[i] === ' ') {
             result += ' ';
           } else if (charProgress >= 1) {
@@ -51,9 +51,9 @@ export default function TextScramble({
             result += chars[Math.floor(Math.random() * chars.length)];
           }
         }
-        
+
         setDisplayText(result);
-        
+
         if (frame < totalFrames) {
           requestAnimationFrame(animate);
         } else {
@@ -61,7 +61,7 @@ export default function TextScramble({
           onComplete?.();
         }
       };
-      
+
       animate();
     }, delay * 1000);
 
@@ -99,15 +99,21 @@ export function SplitText({
     hasAnimated.current = true;
 
     const chars = containerRef.current.querySelectorAll('.char');
-    
+
     gsap.set(chars, { opacity: 0, y: 50 });
-    
+
+    // Faster animations on mobile
+    const isMobile = window.innerWidth < 768;
+    const mobileDuration = isMobile ? 0.4 : 0.8;
+    const mobileStagger = isMobile ? stagger * 0.5 : stagger;
+    const mobileDelay = isMobile ? delay * 0.5 : delay;
+
     gsap.to(chars, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      stagger: stagger,
-      delay: delay,
+      duration: mobileDuration,
+      stagger: mobileStagger,
+      delay: mobileDelay,
       ease: 'power3.out',
     });
   }, [delay, stagger]);

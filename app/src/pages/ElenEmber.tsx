@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  ArrowLeft, 
-  TrendingUp, 
-  Shield, 
+import {
+  ArrowLeft,
+  TrendingUp,
+  Shield,
   Brain,
   Zap,
   BarChart3,
@@ -122,8 +122,8 @@ export default function ElenEmberPage() {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-4">
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -154,7 +154,7 @@ export default function ElenEmberPage() {
             "Money sleeps in Excel. It multiplies in Elen and Ember."
           </p>
           <p className="text-lg text-muted-foreground max-w-2xl mb-8">
-            An AI-native Financial Operating System architected for institutional-grade treasury 
+            An AI-native Financial Operating System architected for institutional-grade treasury
             management. Real-time liquidity intelligence powered by Advanced Agentic AI.
           </p>
         </div>
@@ -164,13 +164,14 @@ export default function ElenEmberPage() {
       <div className="reveal-section py-20 px-6 md:px-12 bg-card/50">
         <div className="max-w-[1400px] mx-auto">
           <h2 className="text-3xl font-bold text-white mb-12 text-center">Platform Interface</h2>
-          
+
           <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden border border-border bg-white">
+            {/* Fixed height container for consistent sizing */}
+            <div className="relative rounded-2xl overflow-hidden border border-border bg-white" style={{ height: '500px' }}>
               <img
                 src={screenshots[currentSlide].src}
                 alt={screenshots[currentSlide].caption}
-                className="w-full h-auto max-h-[600px] object-contain"
+                className="w-full h-full object-contain object-center"
               />
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
                 <p className="text-white font-medium">{screenshots[currentSlide].caption}</p>
@@ -190,14 +191,13 @@ export default function ElenEmberPage() {
               <ChevronRight className="w-6 h-6" />
             </button>
 
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-1.5 sm:gap-2 mt-4 sm:mt-6">
               {screenshots.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentSlide ? 'bg-amber-400 w-8' : 'bg-white/20'
-                  }`}
+                  className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all ${index === currentSlide ? 'bg-amber-400 w-6 sm:w-8' : 'bg-white/20'
+                    }`}
                 />
               ))}
             </div>
@@ -212,9 +212,9 @@ export default function ElenEmberPage() {
             <AlertTriangle className="w-6 h-6 text-red-400" />
             <h2 className="text-3xl font-bold text-white">The Absolute Truth: The Liquidity Crisis</h2>
           </div>
-          
+
           <p className="text-xl text-muted-foreground mb-12">
-            The Financial World Runs on 1980s Infrastructure. The modern Treasurer manages 
+            The Financial World Runs on 1980s Infrastructure. The modern Treasurer manages
             billion-dollar responsibilities using tools designed for the calculator era.
           </p>
 
@@ -240,7 +240,7 @@ export default function ElenEmberPage() {
         <div className="max-w-[1400px] mx-auto">
           <h2 className="text-3xl font-bold text-white mb-12 text-center">The Solution: Elen and Ember Securities</h2>
           <p className="text-xl text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
-            Institutional Intelligence. Zero Latency. The first Financial Operating System 
+            Institutional Intelligence. Zero Latency. The first Financial Operating System
             architected natively by Advanced Agentic AI.
           </p>
 
@@ -293,7 +293,7 @@ export default function ElenEmberPage() {
       <div className="reveal-section py-20 px-6 md:px-12 bg-card/30">
         <div className="max-w-[1400px] mx-auto">
           <h2 className="text-3xl font-bold text-white mb-12 text-center">Competitive Landscape</h2>
-          
+
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -323,7 +323,7 @@ export default function ElenEmberPage() {
       <div className="reveal-section py-20 px-6 md:px-12">
         <div className="max-w-[1400px] mx-auto">
           <h2 className="text-3xl font-bold text-white mb-12 text-center">Roadmap to Autonomy</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-8 rounded-2xl bg-card border border-border relative">
               <div className="absolute -top-4 left-8 px-4 py-1 rounded-full bg-amber-500 text-black text-sm font-bold">Now</div>
@@ -363,7 +363,7 @@ export default function ElenEmberPage() {
           <h2 className="text-4xl font-bold text-white mb-6">The End of the Manual Treasury</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             We are not building a better spreadsheet. We are building the Central Nervous System of Capital.
-            Every day a company waits to adopt Elen and Ember is a day of lost capital, unmanaged risk, 
+            Every day a company waits to adopt Elen and Ember is a day of lost capital, unmanaged risk,
             and wasted human potential.
           </p>
           <div className="text-2xl font-bold text-amber-400">

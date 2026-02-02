@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  ArrowLeft, 
-  Github, 
-  ExternalLink, 
-  Zap, 
-  Shield, 
-  BarChart3, 
+import {
+  ArrowLeft,
+  Github,
+  ExternalLink,
+  Zap,
+  Shield,
+  BarChart3,
   Layers,
   Terminal,
   Sparkles,
@@ -127,8 +127,8 @@ export default function CodeSmithPage() {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-4">
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -156,8 +156,8 @@ export default function CodeSmithPage() {
             AI-Powered Collaborative Coding Platform
           </p>
           <p className="text-lg text-muted-foreground max-w-2xl mb-8">
-            A next-generation, browser-based development environment that seamlessly integrates 
-            AI capabilities into the developer workflow. Built for the modern development team, 
+            A next-generation, browser-based development environment that seamlessly integrates
+            AI capabilities into the developer workflow. Built for the modern development team,
             it eliminates the friction between coding and AI assistance.
           </p>
 
@@ -188,14 +188,14 @@ export default function CodeSmithPage() {
       <div className="reveal-section py-20 px-6 md:px-12 bg-card/50">
         <div className="max-w-[1400px] mx-auto">
           <h2 className="text-3xl font-bold text-white mb-12 text-center">Platform Showcase</h2>
-          
+
           <div className="relative">
-            {/* Main Image */}
-            <div className="relative rounded-2xl overflow-hidden border border-border bg-black">
+            {/* Main Image - Fixed height container for consistent sizing */}
+            <div className="relative rounded-2xl overflow-hidden border border-border bg-black" style={{ height: '500px' }}>
               <img
                 src={screenshots[currentSlide].src}
                 alt={screenshots[currentSlide].caption}
-                className="w-full h-auto max-h-[600px] object-contain"
+                className="w-full h-full object-contain object-center"
               />
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
                 <p className="text-white font-medium">{screenshots[currentSlide].caption}</p>
@@ -217,14 +217,13 @@ export default function CodeSmithPage() {
             </button>
 
             {/* Indicators */}
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-1.5 sm:gap-2 mt-4 sm:mt-6">
               {screenshots.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentSlide ? 'bg-cyan-400 w-8' : 'bg-white/20'
-                  }`}
+                  className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all ${index === currentSlide ? 'bg-cyan-400 w-6 sm:w-8' : 'bg-white/20'
+                    }`}
                 />
               ))}
             </div>
@@ -303,12 +302,12 @@ export default function CodeSmithPage() {
               <h2 className="text-3xl font-bold text-white mb-6">The Problem</h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  Setting up a development environment shouldn't feel like solving a Rubik's Cube. 
-                  For many developers, especially beginners, students, or folks on constrained devices 
+                  Setting up a development environment shouldn't feel like solving a Rubik's Cube.
+                  For many developers, especially beginners, students, or folks on constrained devices
                   like Chromebooks—getting started with coding can be harder than coding itself.
                 </p>
                 <p>
-                  You install a local server. It crashes. You try configuring VS Code. It freezes. 
+                  You install a local server. It crashes. You try configuring VS Code. It freezes.
                   And then there's LLM integration? Forget it.
                 </p>
               </div>
@@ -317,12 +316,12 @@ export default function CodeSmithPage() {
               <h2 className="text-3xl font-bold text-white mb-6">The Solution</h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  Code-Smith exists to eliminate that friction. A browser-based, AI-enhanced coding 
+                  Code-Smith exists to eliminate that friction. A browser-based, AI-enhanced coding
                   platform that just works.
                 </p>
                 <p>
-                  Write and preview code instantly—no setup required. Get AI help that actually helps 
-                  without the threat of getting sensitive data exposed. Analyze your LLM performance 
+                  Write and preview code instantly—no setup required. Get AI help that actually helps
+                  without the threat of getting sensitive data exposed. Analyze your LLM performance
                   in one clean dashboard.
                 </p>
               </div>

@@ -34,13 +34,16 @@ function HomePage() {
   useEffect(() => {
     if (isLoading) return;
 
+    // Detect mobile for optimized settings
+    const isMobile = window.innerWidth < 768;
+
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: isMobile ? 0.8 : 1.2, // Faster on mobile
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      touchMultiplier: 2,
+      touchMultiplier: isMobile ? 1.5 : 2, // Less sensitive on mobile
     });
 
     lenisRef.current = lenis;

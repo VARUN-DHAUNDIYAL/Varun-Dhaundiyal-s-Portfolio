@@ -123,9 +123,11 @@ export default function Experience() {
                   rel="noopener noreferrer"
                   className="group flex items-center gap-3 px-4 py-2 rounded-xl bg-white/5 border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-500"
                 >
-                  <div className="w-6 h-6 rounded bg-gradient-to-br from-[#FF6B35] to-[#F7931E] flex items-center justify-center">
-                    <span className="text-white font-bold text-xs">S</span>
-                  </div>
+                  <img
+                    src="/images/shipsy-logo.png"
+                    alt="Shipsy"
+                    className="w-6 h-6 object-contain"
+                  />
                   <div>
                     <div className="text-white text-sm font-semibold group-hover:text-primary transition-colors">Shipsy</div>
                   </div>
