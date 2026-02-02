@@ -42,7 +42,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center z-10"
+      className="relative min-h-[75vh] md:min-h-screen flex items-center justify-center z-10 pt-24 md:pt-0"
     >
       <div
         ref={contentRef}

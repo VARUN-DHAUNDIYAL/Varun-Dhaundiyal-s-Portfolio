@@ -378,11 +378,18 @@
     font-size: clamp(1.5rem, 7vw, 2rem) !important;
   }
 
-  /* Section padding - tighter on mobile */
+  /* Section padding - much tighter on mobile */
   section {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
     overflow-x: hidden !important;
+  }
+
+  /* Hero section specific - proper spacing below navbar */
+  section#hero,
+  section:first-of-type {
+    padding-top: 5rem !important;
+    min-height: auto !important;
   }
 
   /* Container padding - prevent cutoff */

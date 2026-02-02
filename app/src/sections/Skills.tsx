@@ -63,11 +63,11 @@ const tools = [
   { name: 'SQL', icon: Database },
   { name: 'Python', icon: FileCode },
   { name: 'Git', icon: GitBranch },
-  { name: 'Analytics', icon: BarChart3 },
   { name: 'REST APIs', icon: Server },
+  { name: 'Analytics', icon: BarChart3 },
   { name: 'Data Viz', icon: LineChart },
-  { name: 'Problem Solving', icon: Lightbulb },
   { name: 'Agile', icon: Workflow },
+  { name: 'Problem Solving', icon: Lightbulb },
 ];
 
 const aiTools = [
@@ -186,25 +186,25 @@ export default function Skills() {
           {skillCategories.map((category) => (
             <div
               key={category.name}
-              className="skill-category group p-8 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-500 relative overflow-hidden"
+              className="skill-category group p-4 md:p-8 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-500 relative overflow-hidden"
               style={{ transformStyle: 'preserve-3d' }}
             >
               {/* Gradient background on hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
 
               <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors group-hover:scale-110 transform duration-300">
-                    <category.icon className="w-6 h-6 text-primary" />
+                <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+                  <div className="p-2 md:p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors group-hover:scale-110 transform duration-300 flex-shrink-0">
+                    <category.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{category.name}</h3>
+                  <h3 className="text-base md:text-xl font-bold text-white">{category.name}</h3>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 md:gap-2">
                   {category.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="skill-tag px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-muted-foreground border border-border cursor-default hover:bg-primary/10 hover:border-primary/30 hover:text-white transition-all duration-300"
+                      className="skill-tag px-2.5 py-1 md:px-4 md:py-2 text-xs md:text-sm font-medium rounded-full bg-white/5 text-muted-foreground border border-border cursor-default hover:bg-primary/10 hover:border-primary/30 hover:text-white transition-all duration-300"
                     >
                       {skill}
                     </span>
@@ -254,7 +254,7 @@ export default function Skills() {
 
           <div
             ref={toolsRef}
-            className="flex flex-wrap justify-center gap-4"
+            className="grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-3 md:gap-4"
           >
             {tools.map((tool) => (
               <div
