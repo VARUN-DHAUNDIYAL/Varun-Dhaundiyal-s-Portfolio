@@ -231,64 +231,25 @@ export default function Experience() {
             </div>
           </div>
 
-          {/* Right Column - Impact Stats */}
+          {/* Right Column - My Personal Impact Stats */}
           <div ref={statsRef} className="space-y-4">
             <div className="stat-item p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300">
               <div className="flex items-center gap-3 mb-3">
-                <TrendingUp className="w-5 h-5 text-primary" />
-                <span className="text-sm text-muted-foreground">Platform Scale</span>
-              </div>
-              <div className="text-3xl font-bold text-white mb-1">270+</div>
-              <div className="text-sm text-muted-foreground">Global Customers</div>
-            </div>
-
-            <div className="stat-item p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300">
-              <div className="flex items-center gap-3 mb-3">
-                <BarChart3 className="w-5 h-5 text-primary" />
-                <span className="text-sm text-muted-foreground">Daily Processing</span>
-              </div>
-              <div className="text-3xl font-bold text-white mb-1">5M+</div>
-              <div className="text-sm text-muted-foreground">Shipments Tracked</div>
-            </div>
-
-            <div className="stat-item p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300">
-              <div className="flex items-center gap-3 mb-3">
                 <Shield className="w-5 h-5 text-primary" />
-                <span className="text-sm text-muted-foreground">Enterprise Reach</span>
+                <span className="text-sm text-muted-foreground">UAT Quality Score</span>
               </div>
-              <div className="text-3xl font-bold text-white mb-1">30+</div>
-              <div className="text-sm text-muted-foreground">Countries Served</div>
+              <div className="text-3xl font-bold text-white mb-1">39/40</div>
+              <div className="text-sm text-muted-foreground">Features Passed First Review</div>
             </div>
 
             <div className="stat-item p-6 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20">
               <div className="flex items-center gap-3 mb-3">
-                <Sparkles className="w-5 h-5 text-primary" />
-                <span className="text-sm text-primary">Recognition</span>
+                <BarChart3 className="w-5 h-5 text-primary" />
+                <span className="text-sm text-primary">Dashboard Impact</span>
               </div>
-              <div className="text-lg font-bold text-white mb-1">Gartner Magic Quadrant</div>
-              <div className="text-sm text-muted-foreground">Global TMS Leader</div>
+              <div className="text-3xl font-bold text-white mb-1">20+</div>
+              <div className="text-sm text-muted-foreground">Enterprise Dashboards Built</div>
             </div>
-          </div>
-        </div>
-
-        {/* Key Highlights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-xl bg-white/[0.02] border border-border hover:border-primary/30 transition-all duration-300 group">
-            <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">$150M+</div>
-            <div className="text-white font-medium mb-1">Freight Procured</div>
-            <div className="text-sm text-muted-foreground">Monthly through platform</div>
-          </div>
-
-          <div className="p-6 rounded-xl bg-white/[0.02] border border-border hover:border-primary/30 transition-all duration-300 group">
-            <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">650K+</div>
-            <div className="text-white font-medium mb-1">Containers Tracked</div>
-            <div className="text-sm text-muted-foreground">Real-time visibility</div>
-          </div>
-
-          <div className="p-6 rounded-xl bg-white/[0.02] border border-border hover:border-primary/30 transition-all duration-300 group">
-            <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">60M+</div>
-            <div className="text-white font-medium mb-1">Parcels Monthly</div>
-            <div className="text-sm text-muted-foreground">Powered by Shipsy</div>
           </div>
         </div>
 

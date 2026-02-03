@@ -42,11 +42,11 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[75vh] md:min-h-screen flex items-center justify-center z-10 pt-24 md:pt-0"
+      className="relative min-h-[75vh] md:min-h-screen flex flex-col items-center justify-center z-10 pt-24 md:pt-0"
     >
       <div
         ref={contentRef}
-        className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12"
+        className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col"
       >
         {/* Label */}
         <div className="mb-4 overflow-hidden">
@@ -122,14 +122,14 @@ export default function Hero() {
             Get in Touch
           </a>
         </div>
-      </div>
 
-      {/* Scroll Indicator */}
-      <div
-        className={`absolute bottom-12 left-1/2 -translate-x-1/2 transition-all duration-700 delay-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-      >
-        <ScrollArrow />
+        {/* Scroll Indicator - inline on mobile, absolute on desktop */}
+        <div
+          className={`mt-12 md:mt-0 md:absolute md:bottom-12 md:left-1/2 md:-translate-x-1/2 flex justify-center transition-all duration-700 delay-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+        >
+          <ScrollArrow />
+        </div>
       </div>
 
       {/* Decorative Elements */}

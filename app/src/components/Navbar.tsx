@@ -1,5 +1,129 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Menu, X } from 'lucide-react';
+
+// Mobile Menu Portal Component
+function MobileMenuPortal({ isOpen, onClose, navLinks, scrollToSection }: {
+    isOpen: boolean;
+    onClose: () => void;
+    navLinks: { name: string; href: string }[];
+    scrollToSection: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
+}) {
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
+
+    if (!isOpen) return null;
+
+    return createPortal(
+        <div
+            id="mobile-nav-portal"
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100vw',
+                height: '100vh',
+                backgroundColor: 'rgba(0, 0, 0, 0.98)',
+                zIndex: 99999,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                animation: 'fadeIn 0.3s ease-out',
+            }}
+        >
+            {/* Close button */}
+            <button
+                onClick={onClose}
+                style={{
+                    position: 'absolute',
+                    top: '20px',
+                    right: '20px',
+                    width: '44px',
+                    height: '44px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '12px',
+                    color: 'white',
+                    cursor: 'pointer',
+                }}
+                aria-label="Close menu"
+            >
+                <X size={24} />
+            </button>
+
+            {/* Navigation Links */}
+            <nav style={{ textAlign: 'center' }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                    {navLinks.map((link, index) => (
+                        <li
+                            key={link.name}
+                            style={{
+                                marginBottom: '24px',
+                                animation: `slideUp 0.4s ease-out ${index * 0.1}s both`,
+                            }}
+                        >
+                            <a
+                                href={link.href}
+                                onClick={(e) => {
+                                    scrollToSection(e, link.href);
+                                    onClose();
+                                }}
+                                style={{
+                                    color: 'white',
+                                    fontSize: '28px',
+                                    fontWeight: 600,
+                                    textDecoration: 'none',
+                                    display: 'block',
+                                    padding: '12px 24px',
+                                    transition: 'color 0.2s ease',
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.color = '#3b82f6'}
+                                onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
+                            >
+                                {link.name}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+
+            {/* Keyframe animations injected as style tag */}
+            <style>{`
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideUp {
+                    from { 
+                        opacity: 0; 
+                        transform: translateY(20px); 
+                    }
+                    to { 
+                        opacity: 1; 
+                        transform: translateY(0); 
+                    }
+                }
+                #mobile-nav-portal * {
+                    transform: none !important;
+                    backface-visibility: visible !important;
+                }
+            `}</style>
+        </div>,
+        document.body
+    );
+}
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -25,21 +149,8 @@ export default function Navbar() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Prevent body scroll when mobile menu is open
-    useEffect(() => {
-        if (isMobileMenuOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [isMobileMenuOpen]);
-
     const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
-        setIsMobileMenuOpen(false);
         const element = document.querySelector(href);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
@@ -58,14 +169,14 @@ export default function Navbar() {
     return (
         <>
             <nav
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/5 py-3 md:py-4' : 'bg-transparent py-4 md:py-6'
+                className={`fixed top-0 left-0 right-0 z-[101] transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/5 py-3 md:py-4' : 'bg-transparent py-4 md:py-6'
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-4 md:px-12 flex items-center justify-between">
                     <a
                         href="#canvas-container"
                         onClick={(e) => scrollToSection(e, '#canvas-container')}
-                        className="text-xl font-bold tracking-tighter text-white/90 hover:text-white transition-colors z-50"
+                        className="text-xl font-bold tracking-tighter text-white/90 hover:text-white transition-colors"
                     >
                         VD<span className="text-primary">.</span>
                     </a>
@@ -88,43 +199,23 @@ export default function Navbar() {
 
                     {/* Mobile Menu Button */}
                     <button
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className="md:hidden p-2 rounded-lg bg-white/5 border border-white/10 text-white z-50 hover:bg-white/10 transition-colors"
-                        aria-label="Toggle menu"
+                        onClick={() => setIsMobileMenuOpen(true)}
+                        className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors"
+                        aria-label="Open menu"
+                        style={{ minWidth: '40px', minHeight: '40px' }}
                     >
-                        {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                        <Menu className="w-5 h-5" />
                     </button>
                 </div>
             </nav>
 
-            {/* Mobile Menu Overlay */}
-            <div
-                className={`fixed inset-0 bg-black/90 backdrop-blur-xl z-40 md:hidden transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-                    }`}
-            >
-                <div className="flex flex-col items-center justify-center h-full">
-                    <ul className="flex flex-col items-center gap-6">
-                        {navLinks.map((link, index) => (
-                            <li
-                                key={link.name}
-                                className={`transform transition-all duration-300 ${isMobileMenuOpen
-                                    ? 'translate-y-0 opacity-100'
-                                    : 'translate-y-4 opacity-0'
-                                    }`}
-                                style={{ transitionDelay: isMobileMenuOpen ? `${index * 50}ms` : '0ms' }}
-                            >
-                                <a
-                                    href={link.href}
-                                    onClick={(e) => scrollToSection(e, link.href)}
-                                    className="text-2xl font-semibold text-white hover:text-primary transition-colors"
-                                >
-                                    {link.name}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
+            {/* Mobile Menu rendered via Portal */}
+            <MobileMenuPortal
+                isOpen={isMobileMenuOpen}
+                onClose={() => setIsMobileMenuOpen(false)}
+                navLinks={navLinks}
+                scrollToSection={scrollToSection}
+            />
         </>
     );
 }

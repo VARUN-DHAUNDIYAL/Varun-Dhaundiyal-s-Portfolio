@@ -332,14 +332,23 @@
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
 
-  /* GPU acceleration for smoother animations */
-  *,
-  *::before,
-  *::after {
+  /* GPU acceleration for smoother animations - EXCEPT mobile menu */
+  *:not([data-mobile-menu] *):not([data-mobile-menu]),
+  *:not([data-mobile-menu] *)::before,
+  *:not([data-mobile-menu] *)::after {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
+  }
+
+  /* Mobile menu explicit visibility */
+  [data-mobile-menu],
+  [data-mobile-menu] * {
+    transform: none !important;
+    backface-visibility: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   /* Faster transitions on mobile */

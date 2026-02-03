@@ -255,12 +255,12 @@ export default function Contact() {
               </h3>
               <div className="space-y-3">
                 <a
-                  href="/resume.pdf"
+                  href="https://drive.google.com/file/d/13rHBvTRVHikcJG7J113nK719woQjvr_v/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-2 text-foreground hover:text-primary transition-colors"
                 >
-                  <span>Download Resume</span>
+                  <span>Varun's Resume</span>
                   <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </a>
                 <a

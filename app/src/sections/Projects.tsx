@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, ArrowRight, Cpu } from 'lucide-react';
@@ -59,6 +59,149 @@ const otherProject = {
   ],
   github: 'https://github.com/VARUN-DHAUNDIYAL/MNSIT_CUDA_MLP_PROJECT',
 };
+
+// 3D Tilt Card Component with smooth GPU-accelerated animations
+function TiltCard({
+  children,
+  className = '',
+  href
+}: {
+  children: React.ReactNode;
+  className?: string;
+  href: string;
+}) {
+  const cardRef = useRef<HTMLAnchorElement>(null);
+  const glareRef = useRef<HTMLDivElement>(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const frameRef = useRef<number>();
+  const targetRotation = useRef({ x: 0, y: 0 });
+  const currentRotation = useRef({ x: 0, y: 0 });
+
+  // Smooth animation using lerp (linear interpolation)
+  const lerp = (start: number, end: number, factor: number) => {
+    return start + (end - start) * factor;
+  };
+
+  // Animation loop for ultra-smooth 60fps rendering
+  const animate = useCallback(() => {
+    if (!cardRef.current) return;
+
+    // Smooth interpolation factor (lower = smoother but slower)
+    const smoothFactor = 0.12;
+
+    currentRotation.current.x = lerp(
+      currentRotation.current.x,
+      targetRotation.current.x,
+      smoothFactor
+    );
+    currentRotation.current.y = lerp(
+      currentRotation.current.y,
+      targetRotation.current.y,
+      smoothFactor
+    );
+
+    // Apply transforms using translate3d for GPU acceleration
+    cardRef.current.style.transform = `
+      perspective(1000px)
+      rotateX(${currentRotation.current.x}deg)
+      rotateY(${currentRotation.current.y}deg)
+      scale3d(${isHovering ? 1.02 : 1}, ${isHovering ? 1.02 : 1}, 1)
+    `;
+
+    // Update glare position
+    if (glareRef.current && isHovering) {
+      const glareX = 50 + currentRotation.current.y * 2;
+      const glareY = 50 - currentRotation.current.x * 2;
+      glareRef.current.style.background = `
+        radial-gradient(
+          circle at ${glareX}% ${glareY}%,
+          rgba(255, 255, 255, 0.15) 0%,
+          rgba(255, 255, 255, 0.05) 40%,
+          transparent 80%
+        )
+      `;
+    }
+
+    // Continue animation loop only while hovering or returning to center
+    const threshold = 0.01;
+    const needsAnimation =
+      Math.abs(currentRotation.current.x - targetRotation.current.x) > threshold ||
+      Math.abs(currentRotation.current.y - targetRotation.current.y) > threshold;
+
+    if (needsAnimation || isHovering) {
+      frameRef.current = requestAnimationFrame(animate);
+    }
+  }, [isHovering]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!cardRef.current) return;
+
+    const rect = cardRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Calculate rotation based on mouse position (max 8 degrees)
+    const maxRotation = 8;
+    const rotateY = ((e.clientX - centerX) / (rect.width / 2)) * maxRotation;
+    const rotateX = -((e.clientY - centerY) / (rect.height / 2)) * maxRotation;
+
+    targetRotation.current = { x: rotateX, y: rotateY };
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    setIsHovering(true);
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    frameRef.current = requestAnimationFrame(animate);
+  }, [animate]);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false);
+    targetRotation.current = { x: 0, y: 0 };
+    // Continue animation to smoothly return to center
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    frameRef.current = requestAnimationFrame(animate);
+
+    // Fade out glare
+    if (glareRef.current) {
+      glareRef.current.style.opacity = '0';
+    }
+  }, [animate]);
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <a
+      ref={cardRef}
+      href={href}
+      className={`${className} project-card`}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transformStyle: 'preserve-3d',
+        willChange: 'transform',
+        transition: isHovering ? 'none' : 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
+      }}
+    >
+      {/* Glare overlay */}
+      <div
+        ref={glareRef}
+        className="absolute inset-0 rounded-3xl pointer-events-none z-20"
+        style={{
+          opacity: isHovering ? 1 : 0,
+          transition: 'opacity 0.3s ease',
+        }}
+      />
+      {children}
+    </a>
+  );
+}
 
 export default function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -155,24 +298,23 @@ export default function Projects() {
         {/* Featured Projects Grid */}
         <div ref={cardsRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {featuredProjects.map((project) => (
-            <a
+            <TiltCard
               key={project.name}
               href={project.link}
-              className="project-card group relative rounded-3xl overflow-hidden bg-card border border-border hover:border-primary/30 transition-all duration-500"
-              style={{ perspective: '1000px' }}
+              className="group relative rounded-3xl overflow-hidden bg-card border border-border hover:border-primary/30"
             >
               {/* Image */}
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-64 overflow-hidden" style={{ transform: 'translateZ(20px)' }}>
                 <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-20`} />
                 <img
                   src={project.image}
                   alt={project.name}
-                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
 
                 {/* Floating badge */}
-                <div className="absolute top-4 left-4 flex items-center gap-2">
+                <div className="absolute top-4 left-4 flex items-center gap-2" style={{ transform: 'translateZ(40px)' }}>
                   <span className="px-3 py-1 text-xs font-medium rounded-full bg-black/50 backdrop-blur-sm text-white border border-white/10">
                     Featured Project
                   </span>
@@ -180,7 +322,7 @@ export default function Projects() {
               </div>
 
               {/* Content */}
-              <div className="p-8">
+              <div className="p-8" style={{ transform: 'translateZ(30px)' }}>
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
@@ -188,7 +330,7 @@ export default function Projects() {
                     </h3>
                     <p className="text-primary font-medium">{project.tagline}</p>
                   </div>
-                  <div className="p-3 rounded-full bg-white/5 group-hover:bg-primary/10 transition-colors">
+                  <div className="p-3 rounded-full bg-white/5 group-hover:bg-primary/10 transition-colors" style={{ transform: 'translateZ(50px)' }}>
                     <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </div>
                 </div>
@@ -198,7 +340,7 @@ export default function Projects() {
                 </p>
 
                 {/* Metrics */}
-                <div className="flex gap-6 mb-6">
+                <div className="flex gap-6 mb-6" style={{ transform: 'translateZ(25px)' }}>
                   {project.metrics.map((metric) => (
                     <div key={metric.label}>
                       <div className="text-xl font-bold text-white">{metric.value}</div>
@@ -212,14 +354,14 @@ export default function Projects() {
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 text-xs font-medium rounded-full bg-white/5 text-muted-foreground border border-border"
+                      className="px-3 py-1 text-xs font-medium rounded-full bg-white/5 text-muted-foreground border border-border group-hover:border-primary/20 transition-colors"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
-            </a>
+            </TiltCard>
           ))}
         </div>
 
@@ -372,3 +514,4 @@ export default function Projects() {
     </section>
   );
 }
+

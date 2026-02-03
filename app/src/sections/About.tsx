@@ -74,18 +74,14 @@ export default function About() {
           <div className="space-y-8">
             <p className="text-lg md:text-xl text-foreground leading-relaxed">
               I'm a <span className="text-white font-medium">4th year B.Tech student</span> at{' '}
-              <span className="text-white font-medium">IIIT Kota</span>, pursuing Electronics and
-              Communication Engineering (ECE). Currently, I'm working as a{' '}
+              <span className="text-white font-medium">IIIT Kota</span>, currently working as a{' '}
               <span className="text-white font-medium">Product Analyst Intern</span> at{' '}
-              <span className="text-white font-medium">Shipsy</span> in Gurugram, where I'm part
-              of the Analytics Pod driving data-driven product decisions.
+              <span className="text-white font-medium">Shipsy</span> — but don't let titles fool you.
+              I'm on a mission to become <span className="text-primary font-semibold">the best Product Manager there is</span>.
             </p>
 
             <p className="text-base text-muted-foreground leading-relaxed">
-              My journey in product management has been fueled by a passion for solving complex
-              problems through data and technology. With hands-on experience in building and
-              optimizing enterprise-grade analytics platforms, I've developed a deep understanding
-              of how products can transform business operations at scale.
+              <span className="text-white font-semibold">Don't judge me by my experience.</span> Judge me by my <span className="text-primary font-medium">eye for what matters</span> — and my ability to leave the rest for dust. I build products that obliterate the competition before their brains can even process what hit them. Surgically precise. Relentlessly cutting-edge. <span className="text-white font-semibold">Absolutely uncompromising.</span>
             </p>
 
             {/* Info Cards */}
