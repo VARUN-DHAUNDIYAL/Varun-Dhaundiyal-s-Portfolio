@@ -4,7 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Calendar,
   MapPin,
-  TrendingUp,
   BarChart3,
   Shield,
   Users,

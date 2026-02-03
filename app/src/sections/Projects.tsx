@@ -73,7 +73,7 @@ function TiltCard({
   const cardRef = useRef<HTMLAnchorElement>(null);
   const glareRef = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
-  const frameRef = useRef<number>();
+  const frameRef = useRef<number | undefined>(undefined);
   const targetRotation = useRef({ x: 0, y: 0 });
   const currentRotation = useRef({ x: 0, y: 0 });
 
